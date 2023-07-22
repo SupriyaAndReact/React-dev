@@ -1,12 +1,20 @@
-const parent = React.createElement("div",{id : "parent"},[
-                    React.createElement("div",{id : "child1"},[
-                        React.createElement("h1",{}, "Inside child 1" ),
-                        React.createElement("h2",{}, "Inside child 1" )
-                    ]),
-                    React.createElement("div",{id : "child2"},[
-                        React.createElement("h1",{}, "Inside child 2" ),
-                        React.createElement("h2",{}, "Inside child 2" )
-                    ])
-                ])
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+const Title =()=> {
+    return (<h1 className="title" tabIndex='5'>
+        Namaste React inside Title
+    </h1>)
+}
+
+const Heading =()=>{
+    return (
+        <div id="parent">
+        <Title/>
+        <h1>Namaste React inside heading</h1>    
+        </div>
+    )
+}
+
 const root = ReactDOM.createRoot(document.getElementById("root"))
-root.render(parent)
+root.render(<Heading />)
