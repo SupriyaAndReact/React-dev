@@ -33,3 +33,7 @@
 .res-logo{
     width :70%;
 }
+.filter-bar{
+    display: flex;
+    margin :10px;
+}
