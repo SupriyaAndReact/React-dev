@@ -7,7 +7,7 @@ const Header =()=>{
             <div className="logo-containner">
                 <img className="logo" src= {companyLogo}></img>
             </div>
-            <div className="nav-container">
+            <div className="nav-items">
                 <ul>
                     <li>Home</li>
                     <li>About Us</li>
