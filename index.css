@@ -20,7 +20,12 @@
 
 .nav-items > ul > li {
     padding: 10px;
-    margin: 10px
+    margin: 10px;
+}
+
+.nav-items > ul > li >a {
+    text-decoration: none;
+    color: currentColor;
 }
 
 .res-container {
@@ -72,4 +77,9 @@
 
 .filter {
     display: flex;
+}
+
+.res-container a {
+    text-decoration: none;
+    color : currentColor;
 }
