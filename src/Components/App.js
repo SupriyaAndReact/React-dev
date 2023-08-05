@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React, { Children, Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./Header";
 import Body from "./Body";
@@ -21,6 +21,7 @@ Food app
 -> address
 -> Contact
 */
+const Grocery= lazy(()=> import('./Grocery'))
 
 const AppLayout =()=>{
     return (
@@ -47,6 +48,11 @@ const appRouter= createBrowserRouter([
             {
                 path: "/contact",
                 element : <Contact />
+            },
+            {
+                path: "/grocery",
+                element : 
+                <Suspense fallback={<h1>Loading...</h1>}><Grocery /></Suspense>              
             },
             {
                 path: "/restaurants/:resId",
