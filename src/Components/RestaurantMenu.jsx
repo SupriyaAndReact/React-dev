@@ -10,12 +10,12 @@ const RestaurantMenu = () =>{
     const resInfo = useRestaurantMenu(resId)
 
     if(resInfo===null) return <Shimmer />
-    const {name,cuisines,costForTwoMessage}= resInfo.data.cards[0].card.card.info
+    const {name,cuisines,costForTwoMessage}= resInfo.cards[0].card.card.info
 
 
-    const itemList  = resInfo.data.cards[2].groupedCard.cardGroupMap.REGULAR.cards[2].card.card.itemCards
+    const itemList  = resInfo.cards[2].groupedCard.cardGroupMap.REGULAR.cards[2].card.card.itemCards
     return (
-        <div className='menu'>
+        <div className='items-center'>
             <h1>{name}</h1>
             <p>{cuisines.join(',')} - {costForTwoMessage}</p>
             <h2>Menu</h2>
