@@ -1,32 +1,38 @@
-import RestaurantCard from './RestaurantCard'
-import React, {useEffect, useState} from 'react'
+import RestaurantCard, { withPromtedLabel } from './RestaurantCard'
+import React, {useContext, useEffect, useState} from 'react'
 import Shimmer from './Shimmer'
 import { Link } from 'react-router-dom'
 import { RESTAURANT_URL } from '../utils/constant'
 import useOnlineStatus from '../utils/useOnlineStatus'
+import { mockRestaurantList } from '../utils/mockData'
+import UserContext from '../utils/UserContext'
 
 const Body = ()=>{
     const [restaurantList, setRestaurantList]=useState([])
     const [searchText, setSearchText]=useState("")
     const [filteredRestaurant, setFilteredRestaurant]=useState([])
 
+    const { loggedInUser,setUserName } =useContext(UserContext)
+
     const fetchData = async() => {
         const data =await fetch(RESTAURANT_URL)
         const json= await data.json()
-        setRestaurantList(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
-        setFilteredRestaurant(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+        setRestaurantList(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants || mockRestaurantList)
+        setFilteredRestaurant(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants || mockRestaurantList)
     }
 
     useEffect(()=>{
         fetchData()
     },[])
 
+    const RestaurantCardPromoted = withPromtedLabel(RestaurantCard)
+
     const onlineStatus = useOnlineStatus()
     if(!onlineStatus) 
         return (<h1>Looks like you are offline!! Please check your internet connection.</h1>)
 
     return restaurantList.length ===0 ? <Shimmer /> : (
-        <div className="body">
+        <div>
         <div className= "flex">
             <div className="p-4 m-4">
                 <input className="border border-solid border-black" type="text" value={searchText} onChange={(e)=>{
@@ -44,7 +50,14 @@ const Body = ()=>{
                 ))
                 setFilteredRestaurant(filteredList)
                 }}>Top Rated Restaurants</button>
-            </div>           
+            </div>
+            <div className="m-4 p-4 flex items-center">
+                Logged In User : 
+                <input className="border border-solid border-black" type="text" value={loggedInUser} onChange={(e)=>{
+                setUserName(e.target.value)
+                 }}/>
+            </div>
+                       
         </div>
         <div className="flex flex-wrap">
         {filteredRestaurant.map((restaurant) => (
@@ -52,7 +65,11 @@ const Body = ()=>{
             key={restaurant.info.id}
             to={"/restaurants/" + restaurant.info.id}
           >
-            <RestaurantCard resData={restaurant} />
+            {restaurant.info.isOpen ? (
+              <RestaurantCardPromoted resData={restaurant} />
+            ) : (
+              <RestaurantCard resData={restaurant} />
+            )}
           </Link>
         ))} 
         </div>
